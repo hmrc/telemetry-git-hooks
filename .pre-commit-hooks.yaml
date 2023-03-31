@@ -1,0 +1,10 @@
+-   id: check-filenames-for-characters
+    name: Check filenames don't contain specified characters
+    description: Check filenames don't contain specified characters
+    language: script
+    entry: ./hooks/check_filenames_for_characters.py
+-   id: check-tool-versions
+    name: Check ASDF tool versions
+    description: Check ASDF tool versions match specified .tool-version versions
+    language: script
+    entry: ./hooks/check_tool_versions.py
