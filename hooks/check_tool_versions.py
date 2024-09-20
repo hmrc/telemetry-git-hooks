@@ -31,8 +31,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     for tool in args.tools:
         if tool not in asdf_versions:
-            returncode = 1
-            print(f"{tool} not in .tool-versions")
+            returncode = 0
+            print(f"{tool} not duplicated in .tool-versions")
             continue
         try:
             with open(f".{tool}-version", "r") as tool_version_file:

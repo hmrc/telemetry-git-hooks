@@ -14,7 +14,7 @@ from hooks.check_tool_versions import main
             1,
             "version mismatch for test-mismatch .test-mismatch-version specifies version 0.0.1 but .tools-versions specifies 0.0.0\n",
         ),
-        ("test-no-tool", 1, "test-no-tool not in .tool-versions\n"),
+        ("test-no-tool", 0, "test-no-tool not duplicated in .tool-versions\n"),
     ),
 )
 def test_main(capsys, tool, expected_retval, expected_response):

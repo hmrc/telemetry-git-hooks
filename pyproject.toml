@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "telemetry-git-hooks"
 version = "0.0.0"
-description = "An AWS Lambda that will re-deploy the Riemann consumer or producer services running in ECS, when triggered by an SNS notification"
+description = "Pre-commit checks for Telemetry"
 authors = ["Team Telemetry"]
 license = "Apache 2.0"
 
@@ -10,17 +10,17 @@ name = "artifactory"
 url = "https://artefacts.tax.service.gov.uk/artifactory/api/pypi/pips/simple/"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "~3.10"
 
 [tool.poetry.dev-dependencies]
-bandit = "^1.7.0"
-black = "^21.5b2"
-pytest = "^6.2.4"
-pytest-cov = "^2.12.1"
-safety = "^1.10.3"
-taskipy = "^1.4.0"
-version-incrementor = "^0.9.0"
-pre-commit = "^2.13.0"
+bandit = "^1"
+black = "*"
+pytest = "*"
+pytest-cov = "*"
+safety = "*"
+taskipy = "*"
+version-incrementor = "0.9.0"
+pre-commit = "^3"
 
 [tool.taskipy.tasks]
 bandit = "bandit -r ./hooks"
