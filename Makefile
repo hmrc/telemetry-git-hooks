@@ -3,8 +3,8 @@ POETRY_OK := $(shell type -P poetry)
 POETRY_PATH := $(shell poetry env info --path)
 POETRY_REQUIRED := $(shell cat .poetry-version)
 PYTHON_OK := $(shell type -P python)
-PYTHON_VERSION ?= $(shell python -V | cut -d' ' -f2)
-PYTHON_REQUIRED := $(shell cat .python-version)
+PYTHON_VERSION ?= $(shell python -V | cut -d' ' -f2 | cut -d'.' -f1,2')
+PYTHON_REQUIRED := $(shell cat .python-version | cut -d'.' -f1,2')
 ROOT_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 POETRY_VIRTUALENVS_IN_PROJECT ?= true
 
@@ -22,7 +22,7 @@ check_poetry: check_python ## Check Poetry installation
     ifeq ('$(POETRY_OK)','')
 	    $(error package 'poetry' not found!)
     else
-	    @echo Found Poetry ${POETRY_REQUIRED}
+	    @echo Found `poetry --version`
     endif
 .PHONY: check_poetry
 
@@ -35,7 +35,7 @@ check_python: ## Check Python installation
     ifneq ('$(PYTHON_REQUIRED)','$(PYTHON_VERSION)')
 	    $(error incorrect version of python found: '${PYTHON_VERSION}'. Expected '${PYTHON_REQUIRED}'!)
     else
-	    @echo Found Python ${PYTHON_REQUIRED}
+	    @echo Found `python --version`
     endif
 .PHONY: check_python
 
@@ -68,25 +68,10 @@ test: setup ## Run functional and unit tests
 	@poetry run task test
 .PHONY: test
 
-package: ## Run a SAM build
-	@poetry run task assemble
-.PHONY: package
-
 prepare_release: ## Runs prepare release
 	@poetry run task prepare_release
 .PHONY: prepare_release
 
-publish: ## Build and push lambda zip to S3 (requires MDTP_ENVIRONMENT to be set to an environment )
-	@poetry run task publish
-.PHONY: publish
-
-unittest: setup ## Run unit tests
-	@poetry run task unittest
-.PHONY: unittest
-
 verify: ## Run task verify
 	@poetry run task verify
 .PHONY: verify
-
-verify_package_and_publish: setup verify prepare_release package publish cut_release
-.PHONY: verify_package_and_publish
